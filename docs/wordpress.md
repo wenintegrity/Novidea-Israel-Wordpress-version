@@ -122,9 +122,39 @@ Rules for editors (Novidea marketing): glossary and style in `docs/glossary-he.m
 - YAML comments (including `# TODO(verify)`) aren't data and don't migrate. Their open items are in `Open tasks.md`.
 - Each migrated page must be checked against the Astro site (`Open tasks.md`, WordPress section).
 
-## 8. Deploy (not built yet)
+## 8. Deploy
 
-Owner: WordPress ops. Hosting isn't chosen yet; this is the outline the hosting ADR and the deploy process must fill in.
+Owner: WordPress ops. The site currently runs on a temporary Cloudways app (temporary address, not indexed). The hosting ADR is still to be written.
+
+### 8.1 Code: push to `main` → `deploy` branch → Cloudways
+
+```
+git push (main) ──► GitHub Action "Deploy to Cloudways" (.github/workflows/deploy-branch.yml)
+                      1. PHP syntax check (a broken file stops the deploy)
+                      2. updates the `deploy` branch: only the theme and the plugin (no src/, docs, migration)
+                      3. optional: asks Cloudways to pull `deploy` (Cloudways API)
+                  ──► Cloudways → Deployment via Git → branch `deploy` → public_html/
+```
+
+- The Action runs only when something under `wp-content/` changed. Run it by hand from GitHub → Actions → "Deploy to Cloudways" → Run workflow.
+- `DEPLOYED.txt` on the `deploy` branch says which `main` commit it holds.
+- **Never commit to `deploy` by hand**: every run replaces its content with `main`'s.
+
+**One-time setup in Cloudways** (Applications → the app → Deployment via Git):
+1. Generate SSH Key, copy it, and add it on GitHub: repo → Settings → Deploy keys → Add deploy key (read-only).
+2. Git Remote Address `git@github.com:wenintegrity/Novidea-Israel-Wordpress-version.git` → Authenticate.
+3. Branch `deploy`, Deployment Path `public_html/` → Start Deployment.
+
+**Each deploy without auto-pull:** after the Action finishes (GitHub → Actions, green tick), click **Pull** in Cloudways → Deployment via Git. Then purge the Varnish cache if a change doesn't show.
+
+**Auto-pull (optional):** in GitHub → Settings → Secrets and variables → Actions, add the repository secrets `CLOUDWAYS_EMAIL` (the Cloudways login email), `CLOUDWAYS_API_KEY` (Cloudways → Account → API Integration), `CLOUDWAYS_SERVER_ID` and `CLOUDWAYS_APP_ID` (the numbers in the app's Cloudways URL: `…/server/<server id>/…/<app id>`). If the Deployment Path isn't `public_html/`, add the variable `CLOUDWAYS_DEPLOY_PATH`. From then on a push to `main` reaches the site with no click.
+
+**Fallback without git:** `npm run migrate:bundle:no-video` writes `migration/out/novidea-israel.zip` and `novidea-blocks.zip`; upload them in wp-admin (Themes / Plugins → Upload → "Replace active with uploaded").
+
+Only code travels this way. Content (pages, menus, Customizer text, media) is in the database and is edited in wp-admin.
+
+### 8.2 Outline for production
+
 
 1. **Host:** MySQL or MariaDB, PHP 8.3, HTTPS, daily off-site backups with tested restore, a staging site, SSH and WP-CLI, page caching. Production doesn't use SQLite.
 2. **Code:** the theme and the plugin (with its built `build/` folder) go from git `main` to staging, then production, by a repeatable step (CI deploy job, SSH/rsync, or the host's git deploy). Never edit code on the server.

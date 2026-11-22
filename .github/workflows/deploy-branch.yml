@@ -1,0 +1,121 @@
+# Deploy flow: push to main → this workflow → `deploy` branch → Cloudways pulls it into public_html/.
+#
+# The `deploy` branch holds ONLY what the server needs:
+#   wp-content/themes/novidea-israel
+#   wp-content/plugins/novidea-blocks   (without the editor source in src/; the built editor code is in build/)
+#   DEPLOYED.txt                        (which main commit this is)
+# so docs, notes, migration and tooling never reach the web server.
+#
+# Steps:
+#   1. PHP syntax check of the theme and plugin. A broken file stops here and never reaches the server.
+#   2. Update the `deploy` branch (only when the theme or plugin changed).
+#   3. Optional: ask Cloudways to pull `deploy` right away (Cloudways API). Runs only when the
+#      repository secrets CLOUDWAYS_EMAIL, CLOUDWAYS_API_KEY, CLOUDWAYS_SERVER_ID and CLOUDWAYS_APP_ID
+#      are set (docs/wordpress.md, "Deploy"). Without them, click Pull in Cloudways → Deployment via Git.
+#
+# Run it by hand: GitHub → Actions → "Deploy to Cloudways" → Run workflow.
+name: Deploy to Cloudways
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'wp-content/**'
+      - '.github/workflows/deploy-branch.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out main
+        uses: actions/checkout@v4
+        with:
+          path: main
+
+      - name: PHP syntax check
+        run: |
+          cd main/wp-content
+          failed=0
+          while IFS= read -r -d '' file; do
+            php -l "$file" >/dev/null || { echo "::error file=wp-content/${file#./}::PHP syntax error"; failed=1; }
+          done < <(find themes/novidea-israel plugins/novidea-blocks -name '*.php' -print0)
+          [ "$failed" = 0 ] && echo "PHP syntax OK"
+          exit "$failed"
+
+      - name: Check out the deploy branch (or start it)
+        env:
+          REPO_URL: https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+        run: |
+          if git ls-remote --exit-code --heads "$REPO_URL" deploy >/dev/null; then
+            git clone --quiet --branch deploy --single-branch "$REPO_URL" deploy
+          else
+            mkdir deploy && cd deploy
+            git init --quiet -b deploy
+            git remote add origin "$REPO_URL"
+          fi
+
+      - name: Copy the theme and plugin
+        run: |
+          cd deploy
+          find . -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
+          mkdir -p wp-content/themes wp-content/plugins
+          rsync -a ../main/wp-content/themes/novidea-israel wp-content/themes/
+          rsync -a --exclude 'src/' --exclude '*.mjs' ../main/wp-content/plugins/novidea-blocks wp-content/plugins/
+
+      - name: Commit and push the deploy branch
+        id: push
+        env:
+          MESSAGE: ${{ github.event.head_commit.message || 'manual run' }}
+        run: |
+          cd deploy
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "Theme and plugin unchanged: nothing new to deploy."
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          printf 'main %s\n%s\n' "$GITHUB_SHA" "$(date -u '+%Y-%m-%d %H:%M UTC')" > DEPLOYED.txt
+          git add DEPLOYED.txt
+          git commit --quiet -m "Deploy ${GITHUB_SHA::7}: ${MESSAGE%%$'\n'*}"
+          git push --quiet origin deploy
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+          echo "deploy branch updated to main ${GITHUB_SHA::7}"
+
+      - name: Pull on Cloudways
+        if: steps.push.outputs.changed == 'true' || github.event_name == 'workflow_dispatch'
+        env:
+          CW_EMAIL: ${{ secrets.CLOUDWAYS_EMAIL }}
+          CW_API_KEY: ${{ secrets.CLOUDWAYS_API_KEY }}
+          CW_SERVER_ID: ${{ secrets.CLOUDWAYS_SERVER_ID }}
+          CW_APP_ID: ${{ secrets.CLOUDWAYS_APP_ID }}
+          CW_DEPLOY_PATH: ${{ vars.CLOUDWAYS_DEPLOY_PATH || 'public_html/' }}
+          GIT_URL: git@github.com:${{ github.repository }}.git
+        run: |
+          if [ -z "$CW_EMAIL" ] || [ -z "$CW_API_KEY" ] || [ -z "$CW_SERVER_ID" ] || [ -z "$CW_APP_ID" ]; then
+            echo "::notice::Cloudways auto-pull isn't set up. Open Cloudways → the app → Deployment via Git and click Pull."
+            exit 0
+          fi
+          api=https://api.cloudways.com/api/v1
+          token=$(curl -sS --fail-with-body -X POST "$api/oauth/access_token" \
+            --data-urlencode "email=$CW_EMAIL" --data-urlencode "api_key=$CW_API_KEY" | jq -r '.access_token // empty')
+          if [ -z "$token" ]; then
+            echo "::error::Cloudways login failed. Check the CLOUDWAYS_EMAIL and CLOUDWAYS_API_KEY secrets."
+            exit 1
+          fi
+          echo "Asking Cloudways to pull the deploy branch…"
+          curl -sS --fail-with-body -X POST "$api/git/pull" -H "Authorization: Bearer $token" \
+            --data-urlencode "server_id=$CW_SERVER_ID" --data-urlencode "app_id=$CW_APP_ID" \
+            --data-urlencode "git_url=$GIT_URL" --data-urlencode "branch_name=deploy" \
+            --data-urlencode "deploy_path=$CW_DEPLOY_PATH"
+          echo
+          echo "Pull requested. It finishes on Cloudways within a minute; purge the Varnish cache if a change doesn't show."
