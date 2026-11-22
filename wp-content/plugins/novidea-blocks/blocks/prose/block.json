@@ -1,0 +1,23 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "novidea/prose",
+	"title": "Legal text",
+	"category": "novidea",
+	"icon": "media-document",
+	"description": "Long-form text for legal pages: numbered sections with paragraphs and bullet lists. Links: [text](/page).",
+	"keywords": [ "privacy", "terms", "policy", "legal" ],
+	"textdomain": "novidea-blocks",
+	"supports": {
+		"html": false,
+		"className": false,
+		"customClassName": false
+	},
+	"attributes": {
+		"anchor": { "type": "string", "default": "" },
+		"sections": { "type": "array", "default": [] }
+	},
+	"render": "file:./render.php",
+	"style": [ "novidea-blocks-common", "file:./style.css" ],
+	"editorStyle": "novidea-blocks-editor-ui"
+}

@@ -1,0 +1,106 @@
+/* Feature cards (design-system.md §10.8). Ported from FeaturesBlock.astro. */
+
+/* Row colors per surface: A for odd rows, B for even rows */
+.nv-features {
+  --card-a: var(--color-navy-50);
+  --card-b: var(--color-yellow-50);
+}
+
+.nv-features.surface-subtle {
+  --card-a: var(--color-white);
+  --card-b: var(--color-yellow-50);
+}
+
+.nv-features.surface-tint {
+  --card-a: var(--color-white);
+  --card-b: var(--color-navy-50);
+}
+
+.nv-features.surface-navy {
+  --card-a: var(--color-navy-800);
+  --card-b: rgb(255 255 255 / 0.1);
+}
+
+.feature-card {
+  block-size: 100%;
+  padding: var(--space-6);
+  background-color: var(--card-bg, var(--card-a));
+  border-radius: var(--radius-sm);
+}
+
+/* Even rows. One column below md: every second card */
+.features > li:nth-child(even) .feature-card {
+  --card-bg: var(--card-b);
+}
+
+/* Two columns from md: cards 3-4, 7-8, ... */
+@media (min-width: 768px) {
+  .features > li:nth-child(even) .feature-card {
+    --card-bg: var(--card-a);
+  }
+
+  .features > li:nth-child(4n + 3) .feature-card,
+  .features > li:nth-child(4n + 4) .feature-card {
+    --card-bg: var(--card-b);
+  }
+}
+
+/* Three columns from lg: cards 4-6, 10-12, ... */
+@media (min-width: 992px) {
+  .features--3 > li:nth-child(n) .feature-card {
+    --card-bg: var(--card-a);
+  }
+
+  .features--3 > li:nth-child(6n + 4) .feature-card,
+  .features--3 > li:nth-child(6n + 5) .feature-card,
+  .features--3 > li:nth-child(6n + 6) .feature-card {
+    --card-bg: var(--card-b);
+  }
+}
+
+/* The section header's own margin (32 px) is the gap under the title bar, as in other sections */
+.nv-features .section-header .measure > :last-child {
+  margin-block-end: 0;
+}
+
+.feature__title {
+  margin-block-end: var(--space-2);
+}
+
+.feature__body {
+  color: var(--text-secondary);
+}
+
+.nv-features.surface-navy .feature__body {
+  color: var(--color-navy-muted);
+}
+
+.feature-card .feature-icon {
+  margin-block-end: var(--space-4);
+  transition: transform var(--duration-base) var(--ease-out);
+}
+
+.feature-card:hover .feature-icon {
+  transform: scale(1.08);
+}
+
+/* Directional icons keep their RTL mirror while scaling */
+.feature-card:hover .feature-icon.icon-directional:dir(rtl) {
+  transform: scaleX(-1) scale(1.08);
+}
+
+.feature__soon {
+  margin-block-start: var(--space-3);
+  font-size: var(--text-sm);
+}
+
+.feature__soon .badge-soon {
+  margin-block-end: 0;
+  margin-inline-end: var(--space-1);
+}
+
+.section-picture {
+  display: block;
+  inline-size: 100%;
+  block-size: auto;
+}

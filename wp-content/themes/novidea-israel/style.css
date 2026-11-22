@@ -1,0 +1,12 @@
+/*
+Theme Name: Novidea Israel
+Description: Hebrew-first (RTL) theme for the Novidea Israel site. Bootstrap 5.3.9 from the jsDelivr CDN with the Novidea brand layer. Page sections come from the Novidea Blocks plugin.
+Author: Novidea
+Version: 0.1.1
+Requires at least: 6.5
+Requires PHP: 8.1
+License: Proprietary
+Text Domain: novidea-israel
+*/
+
+/* Styles live in assets/css/ (tokens.css, brand.css, layout.css), enqueued from inc/assets.php. */

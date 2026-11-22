@@ -1,0 +1,25 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "novidea/page-header",
+	"title": "Page header",
+	"category": "novidea",
+	"icon": "heading",
+	"description": "Opening section for internal pages: picture and slanted yellow panel with the page title (h1) and intro.",
+	"keywords": [ "header", "title", "h1" ],
+	"textdomain": "novidea-blocks",
+	"supports": {
+		"html": false,
+		"className": false,
+		"customClassName": false,
+		"multiple": false
+	},
+	"attributes": {
+		"title": { "type": "string", "default": "" },
+		"intro": { "type": "array", "default": [] },
+		"picture": { "type": "object", "default": {} }
+	},
+	"render": "file:./render.php",
+	"style": [ "novidea-blocks-common", "file:./style.css" ],
+	"editorStyle": "novidea-blocks-editor-ui"
+}

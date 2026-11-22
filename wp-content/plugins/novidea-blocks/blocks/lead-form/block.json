@@ -1,0 +1,29 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "novidea/lead-form",
+	"title": "Lead form (HubSpot)",
+	"category": "novidea",
+	"icon": "feedback",
+	"description": "The HubSpot contact form, loaded only after the visitor allows marketing cookies. Without HubSpot settings it shows a placeholder listing the form fields.",
+	"keywords": [ "form", "contact", "hubspot", "lead" ],
+	"textdomain": "novidea-blocks",
+	"supports": {
+		"html": false,
+		"className": false,
+		"customClassName": false
+	},
+	"attributes": {
+		"anchor": { "type": "string", "default": "lead-form" },
+		"title": { "type": "string", "default": "" },
+		"intro": { "type": "string", "default": "" },
+		"portalId": { "type": "string", "default": "" },
+		"formId": { "type": "string", "default": "" },
+		"region": { "type": "string", "default": "na1" },
+		"fields": { "type": "array", "default": [] }
+	},
+	"render": "file:./render.php",
+	"style": [ "novidea-blocks-common", "file:./style.css" ],
+	"editorStyle": "novidea-blocks-editor-ui",
+	"viewScript": "novidea-hubspot-form"
+}

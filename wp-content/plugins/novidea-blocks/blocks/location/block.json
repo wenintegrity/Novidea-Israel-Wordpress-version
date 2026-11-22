@@ -1,0 +1,28 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "novidea/location",
+	"title": "Office location",
+	"category": "novidea",
+	"icon": "location",
+	"description": "Building, address and directions, with buttons that open Waze or Google Maps (no embedded map, so no third-party cookies).",
+	"keywords": [ "address", "map", "office", "waze" ],
+	"textdomain": "novidea-blocks",
+	"supports": {
+		"html": false,
+		"className": false,
+		"customClassName": false
+	},
+	"attributes": {
+		"anchor": { "type": "string", "default": "location" },
+		"title": { "type": "string", "default": "" },
+		"place": { "type": "string", "default": "" },
+		"address": { "type": "string", "default": "" },
+		"directions": { "type": "string", "default": "" },
+		"mapQuery": { "type": "string", "default": "" },
+		"surface": { "type": "string", "enum": [ "light", "subtle", "tint", "navy" ], "default": "light" }
+	},
+	"render": "file:./render.php",
+	"style": [ "novidea-blocks-common", "file:./style.css" ],
+	"editorStyle": "novidea-blocks-editor-ui"
+}

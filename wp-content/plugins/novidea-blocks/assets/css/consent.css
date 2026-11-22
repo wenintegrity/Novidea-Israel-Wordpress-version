@@ -1,0 +1,88 @@
+/* Cookie consent banner + settings dialog (design-system.md §10.23). */
+
+.consent-banner {
+  position: fixed;
+  inset-inline: 0;
+  inset-block-end: 0;
+  z-index: 1035; /* above the sticky header (1020), below Bootstrap's offcanvas (1045) */
+  padding-block: var(--space-4);
+  box-shadow: 0 -4px 16px rgb(16 19 56 / 0.25);
+}
+
+.consent-banner__inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.consent-banner__title {
+  margin-block-end: var(--space-1);
+  font-weight: 700;
+}
+
+.consent-banner__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+@media (min-width: 992px) {
+  .consent-banner__inner {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .consent-banner__actions {
+    flex-wrap: nowrap;
+    flex-shrink: 0;
+  }
+}
+
+.consent-dialog {
+  inline-size: min(100% - 2 * var(--space-4), 36rem);
+  padding: var(--space-6);
+  border: 0;
+  color: var(--color-navy);
+  background-color: var(--color-white);
+  box-shadow: var(--shadow-md);
+  --focus-ring: var(--color-navy);
+}
+
+.consent-dialog::backdrop {
+  background-color: rgb(16 19 56 / 0.6);
+}
+
+.consent-dialog__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-block-end: var(--space-6);
+}
+
+.consent-options {
+  display: grid;
+  gap: var(--space-4);
+  margin-block-end: var(--space-6);
+}
+
+.consent-option {
+  padding-block-end: var(--space-4);
+  border-block-end: var(--border-thin) solid var(--color-navy-200);
+}
+
+.consent-option .form-check-label {
+  font-weight: 600;
+}
+
+.consent-option__state {
+  font-weight: 400;
+  color: var(--text-secondary);
+}
+
+.consent-dialog__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}

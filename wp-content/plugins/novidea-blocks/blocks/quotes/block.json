@@ -1,0 +1,25 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "novidea/quotes",
+	"title": "Customer quotes",
+	"category": "novidea",
+	"icon": "format-quote",
+	"description": "A carousel of customer quotes with name, role and company. Quotation marks are added automatically.",
+	"keywords": [ "testimonials", "quotes", "carousel" ],
+	"textdomain": "novidea-blocks",
+	"supports": {
+		"html": false,
+		"className": false,
+		"customClassName": false
+	},
+	"attributes": {
+		"anchor": { "type": "string", "default": "quotes" },
+		"title": { "type": "string", "default": "" },
+		"surface": { "type": "string", "enum": [ "light", "subtle", "tint", "navy" ], "default": "navy" },
+		"items": { "type": "array", "default": [] }
+	},
+	"render": "file:./render.php",
+	"style": [ "novidea-blocks-common", "file:./style.css" ],
+	"editorStyle": "novidea-blocks-editor-ui"
+}

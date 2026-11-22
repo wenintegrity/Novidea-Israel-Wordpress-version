@@ -1,0 +1,25 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "novidea/links",
+	"title": "Page link cards",
+	"category": "novidea",
+	"icon": "admin-links",
+	"description": "Cards that each link to a page: icon, title, short summary and an arrow. 4 per row on desktop.",
+	"keywords": [ "links", "cards", "navigation" ],
+	"textdomain": "novidea-blocks",
+	"supports": {
+		"html": false,
+		"className": false,
+		"customClassName": false
+	},
+	"attributes": {
+		"anchor": { "type": "string", "default": "" },
+		"title": { "type": "string", "default": "" },
+		"surface": { "type": "string", "enum": [ "light", "subtle", "tint", "navy" ], "default": "light" },
+		"items": { "type": "array", "default": [] }
+	},
+	"render": "file:./render.php",
+	"style": [ "novidea-blocks-common", "file:./style.css" ],
+	"editorStyle": "novidea-blocks-editor-ui"
+}
