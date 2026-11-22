@@ -9,12 +9,17 @@
 //   3. Writes migration/out/content.json: pages as Novidea blocks, menus, shared texts, media list.
 //   4. Runs a Playground blueprint: Hebrew language, theme + plugin activation, site settings, then
 //      migration/import.php, which creates media library items, pages, menus and Customizer values.
-import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { spawnSync } from 'node:child_process';
+import { copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import YAML from 'yaml';
 import { root, runPlayground } from '../scripts/playground.mjs';
 
-const source = path.resolve(process.argv[2] ?? path.join(root, '..', 'Novidea-Israel'));
+// `--bundle`: instead of importing locally, write migration/out/novidea-import.zip for a server
+// (import.php + content.json + the media files), to run there with `wp eval-file`.
+const bundleMode = process.argv.includes('--bundle');
+const sourceArg = process.argv.slice(2).find((a) => !a.startsWith('--'));
+const source = path.resolve(sourceArg ?? path.join(root, '..', 'Novidea-Israel'));
 const assets = path.join(source, 'src', 'assets');
 const pagesDir = path.join(source, 'src', 'content', 'pages', 'he');
 if (!existsSync(pagesDir)) {
@@ -154,7 +159,7 @@ function block(section) {
 // WordPress page titles = the menu labels (src/i18n/ui.ts), so menus and breadcrumbs read the same.
 const titles = {
 	home: 'עמוד הבית',
-	solution: 'הבעיה והפתרון',
+	solution: 'הפלטפורמה', // owner's change, 22/11/2026 (was "הבעיה והפתרון")
 	capabilities: 'יכולות ליבה',
 	'why-novidea': 'למה נובידאה?',
 	israel: 'המטה בישראל',
@@ -223,13 +228,15 @@ const content = {
 		],
 	},
 	themeMods: {
-		novidea_header_cta_label: 'השאירו פרטים',
+		novidea_header_cta_label: 'לתיאום הדגמה',
 		novidea_header_cta_page: { page: 'contact' },
 		novidea_lead_title: shared.leadCta.title,
 		novidea_lead_body: shared.leadCta.body,
 		novidea_lead_button_label: shared.leadCta.button.label,
 		novidea_lead_button_page: { page: shared.leadCta.button.href.replace(/^\//, '') || 'home' },
-		novidea_footer_about: shared.footerAbout,
+		// Owner's text, 22/11/2026 (replaces shared.footerAbout from the Astro site)
+		novidea_footer_about:
+			'נובידאה היא פלטפורמת הענן המובילה לניהול מערך ההפצה בעולם הביטוח. הפלטפורמה משמשת סוכנויות ביטוח, ברוקרים ובתי סוכן, ומתבססת על טכנולוגיית Salesforce עם בסיס CRM חזק: מהליד הראשון, ניהול הלקוח ועד תביעות וניהול חידושים, הכל במערכת אחת.',
 	},
 	privacyPage: 'privacy',
 	frontPage: 'home',
@@ -287,6 +294,48 @@ for (const [pattern, slug] of Object.entries(patternSources)) {
 	writeFileSync(path.join(patternDir, `${pattern}.html`), markup + '\n');
 }
 console.log(`Patterns: ${Object.keys(patternSources).join(', ')} → wp-content/plugins/novidea-blocks/patterns/`);
+
+// ---------- Bundle for a server ----------
+// Three zips in migration/out/, all uploadable in wp-admin:
+//   novidea-israel.zip  the theme   (Appearance → Themes → Add New → Upload Theme)
+//   novidea-blocks.zip  the plugin  (Plugins → Add New → Upload Plugin; without the editor source)
+//   novidea-import.zip  one-time import plugin (Tools → Novidea import), or for WP-CLI:
+//                       wp eval-file <path>/novidea-import/import.php <site address>
+if (bundleMode) {
+	/** Zips `folder` (inside `parent`) to migration/out/<name>. tar ships with Windows 10+, macOS and Linux. */
+	const makeZip = (name, parent, folder, exclude = []) => {
+		const zip = path.join(outDir, name);
+		rmSync(zip, { force: true });
+		const args = ['-a', '-c', '-f', zip, ...exclude.flatMap((e) => ['--exclude', e]), '-C', parent, folder];
+		if (spawnSync('tar', args, { stdio: 'inherit' }).status !== 0) {
+			console.error(`Could not create ${name}`);
+			process.exit(1);
+		}
+		console.log(`  ${name} (${(statSync(zip).size / 1024 / 1024).toFixed(1)} MB)`);
+	};
+
+	const bundle = path.join(outDir, 'novidea-import');
+	rmSync(bundle, { recursive: true, force: true });
+	mkdirSync(path.join(bundle, 'out'), { recursive: true });
+	copyFileSync(path.join(root, 'migration', 'import.php'), path.join(bundle, 'import.php'));
+	copyFileSync(path.join(root, 'migration', 'admin-plugin.php'), path.join(bundle, 'novidea-import.php'));
+	copyFileSync(path.join(outDir, 'content.json'), path.join(bundle, 'out', 'content.json'));
+	// --no-video: leave the videos out (smaller upload). The importer then uses a copy already in the
+	// media library with the same file name, or leaves the video block on its "coming soon" placeholder.
+	const noVideo = process.argv.includes('--no-video');
+	for (const { file } of media.values()) {
+		if (noVideo && file.startsWith('videos/')) continue;
+		const target = path.join(bundle, 'assets', file);
+		mkdirSync(path.dirname(target), { recursive: true });
+		copyFileSync(path.join(assets, file), target);
+	}
+
+	console.log(`Zips in ${outDir}:`);
+	makeZip('novidea-israel.zip', path.join(root, 'wp-content', 'themes'), 'novidea-israel');
+	makeZip('novidea-blocks.zip', path.join(root, 'wp-content', 'plugins'), 'novidea-blocks', ['novidea-blocks/src', '*.mjs']);
+	makeZip(noVideo ? 'novidea-import-no-video.zip' : 'novidea-import.zip', outDir, 'novidea-import');
+	process.exit(0);
+}
 
 // ---------- Run the import inside WordPress ----------
 const blueprint = {

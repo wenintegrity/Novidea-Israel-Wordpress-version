@@ -8,6 +8,8 @@
     "build": "wp-scripts build --webpack-src-dir=wp-content/plugins/novidea-blocks/src --output-path=wp-content/plugins/novidea-blocks/build",
     "watch": "wp-scripts start --webpack-src-dir=wp-content/plugins/novidea-blocks/src --output-path=wp-content/plugins/novidea-blocks/build",
     "migrate": "node migration/migrate.mjs",
+    "migrate:bundle": "node migration/migrate.mjs --bundle",
+    "migrate:bundle:no-video": "node migration/migrate.mjs --bundle --no-video",
     "reset": "node -e \"require('fs').rmSync('wordpress',{recursive:true,force:true});console.log('Local WordPress removed (your theme and plugin in ./wp-content are untouched). Run npm start, then npm run migrate.')\""
   },
   "devDependencies": {
