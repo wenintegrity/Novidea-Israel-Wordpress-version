@@ -20,7 +20,8 @@ $novidea_privacy = get_privacy_policy_url();
 					<?php novidea_logo( 'dark', true ); ?>
 				</a>
 				<?php if ( $novidea_about ) : ?>
-					<p class="footer-about mt-4 mb-0"><?php echo esc_html( $novidea_about ); ?></p>
+					<h2 class="h4 mt-4"><?php esc_html_e( 'About Novidea', 'novidea-israel' ); ?></h2>
+					<p class="footer-about mb-0"><?php echo esc_html( $novidea_about ); ?></p>
 				<?php endif; ?>
 			</div>
 			<?php if ( $novidea_links ) : ?>

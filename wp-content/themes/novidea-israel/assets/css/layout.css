@@ -96,7 +96,18 @@
 }
 
 .site-header .navbar-brand {
-  padding-block: var(--space-2);
+  padding-block: var(--space-3);
+}
+
+/* Header logo: larger than the minimum (owner's request, 22/11/2026): 32px on mobile, 44px on desktop */
+.site-header .logo {
+  block-size: 2rem;
+}
+
+@media (min-width: 992px) {
+  .site-header .logo {
+    block-size: 2.75rem;
+  }
 }
 
 .site-header .navbar-toggler {
@@ -189,7 +200,7 @@
 /* Desktop: inline nav, CTA at the inline-end */
 @media (min-width: 992px) {
   .site-header .navbar {
-    --bs-navbar-nav-link-padding-x: var(--space-4);
+    --bs-navbar-nav-link-padding-x: var(--space-5);
   }
 
   /* The logo's wordmark sits below the middle of the logo box, so the menu is nudged down to line
@@ -202,8 +213,8 @@
   }
 
   .site-header .navbar-nav {
-    gap: var(--space-1);
-    margin-inline-start: var(--space-10);
+    gap: var(--space-2);
+    margin-inline-start: var(--space-12);
   }
 
   /* Hover: light navy background and a sky bar. Current page: yellow-50 background and a yellow bar. */

@@ -28,7 +28,7 @@ English versions (`/en/…`) are planned; there are no English pages yet. In Wor
 
 ## Navigation
 
-**Header** (menu location `primary`): logo → `/` · הבעיה והפתרון → `/solution` · יכולות ליבה → `/capabilities` · למה נובידאה? → `/why-novidea` · המטה בישראל → `/israel` · button **השאירו פרטים** → `/contact` (label and page set in Appearance → Customize → "Novidea: shared content"). The current page is marked with `aria-current="page"`.
+**Header** (menu location `primary`): logo → `/` · הפלטפורמה → `/solution` (until 22/11/2026: הבעיה והפתרון) · יכולות ליבה → `/capabilities` · למה נובידאה? → `/why-novidea` · המטה בישראל → `/israel` · button **לתיאום הדגמה** → `/contact` (label and page set in Appearance → Customize → "Novidea: shared content"). The current page is marked with `aria-current="page"`.
 
 **Footer** (menu location `footer`): עמוד הבית plus the same links, and a legal row: מדיניות פרטיות · הגדרות עוגיות (opens the cookie settings). The הצהרת נגישות link returns with the page.
 

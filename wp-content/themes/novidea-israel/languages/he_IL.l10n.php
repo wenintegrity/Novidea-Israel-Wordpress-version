@@ -20,6 +20,7 @@ return array(
 		'Close menu'            => 'סגירת התפריט',
 		'Menu'                  => 'תפריט',
 		'Navigation'            => 'ניווט',
+		'About Novidea'         => 'על נובידאה',
 		'All rights reserved.'  => 'כל הזכויות שמורות.',
 		'Legal'                 => 'מידע משפטי',
 		'Privacy policy'        => 'מדיניות פרטיות',
