@@ -1,0 +1,498 @@
+{
+	"ai-brain": {
+		"he": "בינה מלאכותית",
+		"en": "Artificial intelligence",
+		"category": "ai",
+		"directional": false,
+		"light": true,
+		"dark": true
+	},
+	"analytics-search": {
+		"he": "ניתוח נתונים",
+		"en": "Analytics",
+		"category": "data",
+		"directional": false,
+		"light": true,
+		"dark": true
+	},
+	"api": {
+		"he": "ממשקי API",
+		"en": "API",
+		"category": "integration",
+		"directional": false,
+		"light": true,
+		"dark": true
+	},
+	"browser-settings": {
+		"he": "התאמה אישית",
+		"en": "Configuration",
+		"category": "process",
+		"directional": false,
+		"light": true,
+		"dark": true
+	},
+	"business-performance": {
+		"he": "ביצועים עסקיים",
+		"en": "Business performance",
+		"category": "business",
+		"directional": false,
+		"light": true,
+		"dark": true
+	},
+	"career-growth": {
+		"he": "התקדמות",
+		"en": "Progress",
+		"category": "people",
+		"directional": false,
+		"light": true,
+		"dark": true
+	},
+	"certified": {
+		"he": "איכות מאושרת",
+		"en": "Certified quality",
+		"category": "business",
+		"directional": false,
+		"light": true,
+		"dark": true
+	},
+	"checklist": {
+		"he": "רשימת משימות",
+		"en": "Task list",
+		"category": "process",
+		"directional": false,
+		"light": true,
+		"dark": true
+	},
+	"city-buildings": {
+		"he": "ארגונים",
+		"en": "Enterprises",
+		"category": "places",
+		"directional": false,
+		"light": true,
+		"dark": true
+	},
+	"cloud-network": {
+		"he": "רשת ענן",
+		"en": "Cloud network",
+		"category": "cloud",
+		"directional": false,
+		"light": true,
+		"dark": true
+	},
+	"cloud-scale": {
+		"he": "ענן גמיש",
+		"en": "Scalable cloud",
+		"category": "cloud",
+		"directional": false,
+		"light": true,
+		"dark": true
+	},
+	"cloud-security": {
+		"he": "אבטחת ענן",
+		"en": "Cloud security",
+		"category": "cloud",
+		"directional": false,
+		"light": true,
+		"dark": true
+	},
+	"currencies": {
+		"he": "ריבוי מטבעות",
+		"en": "Multiple currencies",
+		"category": "finance",
+		"directional": false,
+		"light": true,
+		"dark": true
+	},
+	"customer-care": {
+		"he": "טיפול בלקוח",
+		"en": "Customer care",
+		"category": "people",
+		"directional": false,
+		"light": true,
+		"dark": true
+	},
+	"dashboard": {
+		"he": "לוח מחוונים",
+		"en": "Dashboard",
+		"category": "data",
+		"directional": false,
+		"light": true,
+		"dark": true
+	},
+	"data-filter": {
+		"he": "סינון נתונים",
+		"en": "Data filtering",
+		"category": "data",
+		"directional": false,
+		"light": true,
+		"dark": true
+	},
+	"database": {
+		"he": "מסד נתונים",
+		"en": "Database",
+		"category": "data",
+		"directional": false,
+		"light": true,
+		"dark": true
+	},
+	"document-automation": {
+		"he": "אוטומציה של מסמכים",
+		"en": "Document automation",
+		"category": "process",
+		"directional": false,
+		"light": true,
+		"dark": true
+	},
+	"document-billing": {
+		"he": "מסמכים וחיובים",
+		"en": "Documents and billing",
+		"category": "finance",
+		"directional": false,
+		"light": true,
+		"dark": true
+	},
+	"document-settings": {
+		"he": "הגדרות מסמכים",
+		"en": "Document configuration",
+		"category": "process",
+		"directional": false,
+		"light": true,
+		"dark": true
+	},
+	"fast-track": {
+		"he": "מסלול מהיר",
+		"en": "Fast track",
+		"category": "process",
+		"directional": true,
+		"light": true,
+		"dark": true
+	},
+	"financial-analysis": {
+		"he": "ניתוח פיננסי",
+		"en": "Financial analysis",
+		"category": "finance",
+		"directional": false,
+		"light": true,
+		"dark": true
+	},
+	"financial-report": {
+		"he": "דוחות כספיים",
+		"en": "Financial reporting",
+		"category": "finance",
+		"directional": false,
+		"light": true,
+		"dark": true
+	},
+	"gears-exchange": {
+		"he": "שילוב תהליכים",
+		"en": "Process integration",
+		"category": "process",
+		"directional": false,
+		"light": true,
+		"dark": true
+	},
+	"growth-chart": {
+		"he": "צמיחה",
+		"en": "Growth",
+		"category": "business",
+		"directional": false,
+		"light": true,
+		"dark": true
+	},
+	"hero": {
+		"he": "העצמה",
+		"en": "Empowerment",
+		"category": "brand",
+		"directional": false,
+		"light": true,
+		"dark": true
+	},
+	"hero-summit": {
+		"he": "מובילות",
+		"en": "Leadership",
+		"category": "brand",
+		"directional": false,
+		"light": true,
+		"dark": true
+	},
+	"idea": {
+		"he": "תובנה",
+		"en": "Insight",
+		"category": "ai",
+		"directional": false,
+		"light": true,
+		"dark": true
+	},
+	"information": {
+		"he": "מידע",
+		"en": "Information",
+		"category": "misc",
+		"directional": false,
+		"light": true,
+		"dark": true
+	},
+	"landmark": {
+		"he": "ציון דרך",
+		"en": "Landmark building",
+		"category": "places",
+		"directional": false,
+		"light": true,
+		"dark": true
+	},
+	"london-lloyds": {
+		"he": "בניין לוידס",
+		"en": "Lloyd's building",
+		"category": "places",
+		"directional": false,
+		"light": true,
+		"dark": true
+	},
+	"london-skyline": {
+		"he": "שוק לונדון",
+		"en": "London market",
+		"category": "places",
+		"directional": false,
+		"light": true,
+		"dark": true
+	},
+	"mobile-app": {
+		"he": "אפליקציה",
+		"en": "Mobile app",
+		"category": "integration",
+		"directional": false,
+		"light": true,
+		"dark": true
+	},
+	"mobile-integration": {
+		"he": "אינטגרציה במובייל",
+		"en": "Mobile integration",
+		"category": "integration",
+		"directional": false,
+		"light": true,
+		"dark": true
+	},
+	"office-building": {
+		"he": "משרד",
+		"en": "Office",
+		"category": "places",
+		"directional": false,
+		"light": true,
+		"dark": true
+	},
+	"online-billing": {
+		"he": "חיוב דיגיטלי",
+		"en": "Online billing",
+		"category": "finance",
+		"directional": false,
+		"light": true,
+		"dark": true
+	},
+	"online-support": {
+		"he": "תמיכה מקוונת",
+		"en": "Online support",
+		"category": "people",
+		"directional": false,
+		"light": true,
+		"dark": true
+	},
+	"org-chart": {
+		"he": "מבנה ארגוני",
+		"en": "Organization",
+		"category": "people",
+		"directional": false,
+		"light": true,
+		"dark": true
+	},
+	"partnership": {
+		"he": "שותפות",
+		"en": "Partnership",
+		"category": "people",
+		"directional": false,
+		"light": true,
+		"dark": true
+	},
+	"people-exchange": {
+		"he": "שיתוף פעולה",
+		"en": "Collaboration",
+		"category": "people",
+		"directional": false,
+		"light": true,
+		"dark": true
+	},
+	"performance": {
+		"he": "ביצועים",
+		"en": "Performance",
+		"category": "data",
+		"directional": false,
+		"light": true,
+		"dark": true
+	},
+	"pie-chart": {
+		"he": "פילוח נתונים",
+		"en": "Data breakdown",
+		"category": "data",
+		"directional": false,
+		"light": true,
+		"dark": true
+	},
+	"platform-integration": {
+		"he": "אינטגרציות",
+		"en": "Integrations",
+		"category": "integration",
+		"directional": false,
+		"light": true,
+		"dark": true
+	},
+	"portal": {
+		"he": "פורטל",
+		"en": "Web portal",
+		"category": "integration",
+		"directional": false,
+		"light": true,
+		"dark": true
+	},
+	"process-cycle": {
+		"he": "אוטומציה של תהליכים",
+		"en": "Process automation",
+		"category": "process",
+		"directional": false,
+		"light": true,
+		"dark": true
+	},
+	"product-module": {
+		"he": "מודול",
+		"en": "Product module",
+		"category": "process",
+		"directional": false,
+		"light": true,
+		"dark": true
+	},
+	"profitable-idea": {
+		"he": "רווחיות",
+		"en": "Profitability",
+		"category": "finance",
+		"directional": false,
+		"light": true,
+		"dark": true
+	},
+	"protection": {
+		"he": "הגנה",
+		"en": "Protection",
+		"category": "business",
+		"directional": false,
+		"light": true,
+		"dark": true
+	},
+	"puzzle": {
+		"he": "גמישות",
+		"en": "Flexibility",
+		"category": "integration",
+		"directional": false,
+		"light": true,
+		"dark": true
+	},
+	"renewals": {
+		"he": "חידושים",
+		"en": "Renewals",
+		"category": "finance",
+		"directional": false,
+		"light": true,
+		"dark": true
+	},
+	"revenue-growth": {
+		"he": "צמיחה בהכנסות",
+		"en": "Revenue growth",
+		"category": "finance",
+		"directional": false,
+		"light": true,
+		"dark": true
+	},
+	"saas": {
+		"he": "תוכנה כשירות",
+		"en": "Software as a service",
+		"category": "cloud",
+		"directional": false,
+		"light": true,
+		"dark": true
+	},
+	"sales-funnel": {
+		"he": "משפך מכירות",
+		"en": "Sales funnel",
+		"category": "business",
+		"directional": false,
+		"light": true,
+		"dark": true
+	},
+	"settings": {
+		"he": "הגדרות",
+		"en": "Settings",
+		"category": "process",
+		"directional": false,
+		"light": true,
+		"dark": true
+	},
+	"smart-ai": {
+		"he": "חשיבה חכמה",
+		"en": "Smart thinking",
+		"category": "ai",
+		"directional": false,
+		"light": true,
+		"dark": true
+	},
+	"speed-horse": {
+		"he": "מהירות",
+		"en": "Speed",
+		"category": "brand",
+		"directional": true,
+		"light": true,
+		"dark": true
+	},
+	"strength": {
+		"he": "עוצמה",
+		"en": "Strength",
+		"category": "brand",
+		"directional": false,
+		"light": true,
+		"dark": true
+	},
+	"support-agent": {
+		"he": "נציג שירות",
+		"en": "Service agent",
+		"category": "people",
+		"directional": false,
+		"light": true,
+		"dark": true
+	},
+	"team-dashboard": {
+		"he": "לוח צוות",
+		"en": "Team dashboard",
+		"category": "people",
+		"directional": false,
+		"light": true,
+		"dark": true
+	},
+	"tech-integration": {
+		"he": "טכנולוגיה",
+		"en": "Technology",
+		"category": "integration",
+		"directional": false,
+		"light": true,
+		"dark": true
+	},
+	"time-automation": {
+		"he": "חיסכון בזמן",
+		"en": "Time savings",
+		"category": "process",
+		"directional": false,
+		"light": true,
+		"dark": true
+	},
+	"work-life": {
+		"he": "איזון בין עבודה לחיים",
+		"en": "Work-life balance",
+		"category": "misc",
+		"directional": false,
+		"light": true,
+		"dark": true
+	}
+}

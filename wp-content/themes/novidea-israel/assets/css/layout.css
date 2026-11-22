@@ -1,0 +1,353 @@
+/*
+ * Page shell: logo, header, footer, lead banner, 404. Ported from the Astro components' scoped
+ * styles (Logo, Header, Footer, LeadCta, 404). Logical properties only (AGENTS.md §4.2).
+ */
+
+/* ---------- Logo (design-system.md §2) ---------- */
+.logo {
+  display: block;
+  block-size: 1.5rem; /* 24px, mobile minimum */
+  inline-size: auto;
+  aspect-ratio: 1398.33333 / 462.8661;
+}
+
+@media (min-width: 992px) {
+  .logo {
+    block-size: 2rem; /* 32px, desktop */
+  }
+}
+
+.logo .logo__wordmark { fill: var(--color-navy); }
+.logo .logo__mark { fill: var(--color-logo-yellow); }
+.logo--dark .logo__wordmark { fill: var(--color-white); }
+.logo--mono .logo__wordmark,
+.logo--mono .logo__mark { fill: var(--color-black); }
+
+/* ---------- Header (design-system.md §10.2) ---------- */
+.site-header {
+  background-color: var(--color-white);
+  border-block-end: var(--border-thin) solid var(--color-navy-200);
+}
+
+/* Logged-in editors: keep the sticky header below the WordPress toolbar */
+.admin-bar .site-header.sticky-top { top: 32px; }
+@media (max-width: 782px) {
+  .admin-bar .site-header.sticky-top { top: 46px; }
+}
+@media (max-width: 600px) {
+  .admin-bar .site-header.sticky-top { top: 0; }
+}
+
+/* Scroll progress: a 4 px brand-red line over the header's bottom border that fills as the page
+   scrolls. Scroll-driven animation (no JavaScript); browsers without support and visitors who
+   prefer reduced motion don't see it. transform-origin has no logical form, so RTL gets its own. */
+.scroll-progress {
+  display: none;
+}
+
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .scroll-progress {
+      display: block;
+      position: absolute;
+      inset-inline: 0;
+      inset-block-end: calc(-1 * var(--border-thin));
+      block-size: 4px;
+      background-color: var(--color-red);
+      transform: scaleX(0);
+      transform-origin: 0 50%;
+      /* Longhands on purpose: the timeline isn't allowed in the `animation` shorthand */
+      animation-name: nv-scroll-progress;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: scroll(root block);
+      pointer-events: none;
+    }
+
+    .scroll-progress:dir(rtl) {
+      transform-origin: 100% 50%;
+    }
+  }
+}
+
+@keyframes nv-scroll-progress {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@media print {
+  .scroll-progress {
+    display: none !important;
+  }
+}
+
+.site-header .navbar {
+  --bs-navbar-padding-y: 0;
+  --bs-navbar-color: var(--color-navy);
+  --bs-navbar-hover-color: var(--color-navy);
+  --bs-navbar-active-color: var(--color-navy);
+  --bs-navbar-brand-color: var(--color-navy);
+  --bs-navbar-brand-hover-color: var(--color-navy);
+  --bs-navbar-toggler-border-color: transparent;
+  --bs-navbar-toggler-padding-x: var(--space-2);
+  --bs-navbar-toggler-padding-y: var(--space-2);
+  min-block-size: var(--header-height);
+}
+
+.site-header .navbar-brand {
+  padding-block: var(--space-2);
+}
+
+.site-header .navbar-toggler {
+  min-inline-size: 2.75rem;
+  min-block-size: 2.75rem;
+  color: var(--color-navy);
+}
+
+.site-header .nav-link {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  min-block-size: 2.75rem;
+  border-radius: var(--radius-sm);
+  transition:
+    background-color var(--duration-fast) var(--ease-out),
+    box-shadow var(--duration-fast) var(--ease-out),
+    color var(--duration-fast) var(--ease-out);
+}
+
+.site-header .nav-link[aria-current='page'] {
+  font-weight: 700;
+}
+
+.site-nav__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+/* Mobile and tablet: the panel is a navy surface (Bootstrap lg breakpoint = 992px) */
+@media (max-width: 991.98px) {
+  /* Only below lg: from lg up Bootstrap hides the toggler, and a display value here would override that */
+  .site-header .navbar-toggler {
+    display: inline-grid;
+    place-items: center;
+  }
+
+  .site-nav {
+    --bs-offcanvas-width: min(100vw, 22rem);
+    --bs-offcanvas-bg: var(--color-navy);
+    --bs-offcanvas-color: var(--color-white);
+    --bs-navbar-color: var(--color-white);
+    --bs-navbar-hover-color: var(--color-white);
+    --bs-navbar-active-color: var(--color-white);
+    --focus-ring: var(--color-yellow);
+  }
+
+  .site-header .offcanvas-title {
+    margin: 0;
+    color: var(--color-white);
+  }
+
+  .site-nav .nav-link {
+    font-size: var(--text-h4);
+    padding-inline: var(--space-4);
+    border-inline-start: 4px solid transparent;
+  }
+
+  .site-nav .nav-link:hover {
+    background-color: var(--color-navy-800);
+  }
+
+  /* Current page: yellow text and a yellow bar at the inline-start */
+  .site-nav .nav-link[aria-current='page'] {
+    color: var(--color-yellow);
+    background-color: var(--color-navy-800);
+    border-inline-start-color: var(--color-yellow);
+  }
+
+  .site-nav__actions {
+    flex-direction: column;
+    align-items: stretch;
+    margin-block-start: var(--space-8);
+  }
+
+  /* The CTA becomes primary-on-dark inside the navy panel */
+  .site-nav__cta {
+    --bs-btn-color: var(--color-navy);
+    --bs-btn-bg: var(--color-yellow);
+    --bs-btn-border-color: var(--color-yellow);
+    --bs-btn-hover-color: var(--color-navy);
+    --bs-btn-hover-bg: var(--color-yellow-600);
+    --bs-btn-hover-border-color: var(--color-yellow-600);
+    min-block-size: 3rem;
+  }
+}
+
+/* Desktop: inline nav, CTA at the inline-end */
+@media (min-width: 992px) {
+  .site-header .navbar {
+    --bs-navbar-nav-link-padding-x: var(--space-4);
+  }
+
+  /* The logo's wordmark sits below the middle of the logo box, so the menu is nudged down to line
+     up with the wordmark rather than with the box. */
+  .site-header .offcanvas-body {
+    align-items: center;
+    flex-grow: 1;
+    position: relative;
+    inset-block-start: var(--header-nav-nudge);
+  }
+
+  .site-header .navbar-nav {
+    gap: var(--space-1);
+    margin-inline-start: var(--space-10);
+  }
+
+  /* Hover: light navy background and a sky bar. Current page: yellow-50 background and a yellow bar. */
+  .site-header .nav-link {
+    box-shadow: inset 0 -3px 0 transparent;
+  }
+
+  .site-header .nav-link:hover {
+    background-color: var(--color-navy-50);
+    box-shadow: inset 0 -3px 0 var(--color-sky);
+  }
+
+  .site-header .nav-link[aria-current='page'] {
+    background-color: var(--color-yellow-50);
+    box-shadow: inset 0 -3px 0 var(--color-yellow);
+  }
+
+  .site-nav__actions {
+    margin-inline-start: auto;
+  }
+}
+
+/* ---------- Footer (design-system.md §10.13) ---------- */
+.site-footer {
+  padding-block: var(--space-16) var(--space-8);
+}
+
+/* Company description: body size for readability, navy-muted (10.32:1 on navy) */
+.footer-about {
+  max-inline-size: 30rem;
+  color: var(--color-navy-muted);
+  line-height: var(--leading-body);
+}
+
+.footer-brand {
+  display: inline-block;
+  text-decoration: none;
+}
+
+.site-footer ul a {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: 2.75rem;
+  color: var(--color-white);
+  text-decoration: none;
+}
+
+.site-footer ul a:hover {
+  color: var(--color-yellow);
+  text-decoration: underline;
+}
+
+/* Two columns of links from sm up, so the footer stays short */
+@media (min-width: 576px) {
+  .footer-nav__list {
+    columns: 2;
+    column-gap: var(--space-8);
+  }
+
+  .footer-nav__list li {
+    break-inside: avoid;
+  }
+}
+
+.footer-legal {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-block-start: var(--space-12);
+  padding-block-start: var(--space-6);
+  border-block-start: var(--border-thin) solid var(--color-navy-800);
+}
+
+.footer-legal__links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: var(--space-6);
+}
+
+.site-footer .footer-legal__links a {
+  display: inline-flex;
+  align-items: center;
+  color: var(--color-white);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  min-block-size: 2.75rem;
+}
+
+.site-footer .footer-legal__links a:hover,
+.footer-link-button:hover {
+  color: var(--color-yellow);
+}
+
+/* A button (it opens a dialog) styled as a footer link */
+.footer-link-button {
+  min-block-size: 2.75rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--color-white);
+  font: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  cursor: pointer;
+}
+
+.footer-link-button:hover {
+  text-decoration-thickness: 2px;
+}
+
+/* ---------- Lead banner (design-system.md §10.17) ---------- */
+@media (max-width: 575.98px) {
+  .lead-cta .cta-button {
+    inline-size: 100%;
+  }
+}
+
+@media (min-width: 992px) {
+  .lead-cta .cta-button {
+    flex-shrink: 0;
+  }
+}
+
+/* ---------- 404 ---------- */
+.not-found {
+  min-block-size: 60vh;
+}
+
+.not-found h1 {
+  margin-block-end: var(--space-8);
+}
+
+.not-found__links {
+  display: grid;
+  gap: var(--space-2);
+  margin-block: var(--space-6) var(--space-8);
+}
+
+.not-found__links a {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: 2.75rem;
+  font-weight: 500;
+}

@@ -1,0 +1,28 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "novidea/features",
+	"title": "Feature cards",
+	"category": "novidea",
+	"icon": "grid-view",
+	"description": "Cards with a brand icon, title and text, in 2 or 3 columns. Cards can be marked \"coming soon\".",
+	"keywords": [ "cards", "features", "icons" ],
+	"textdomain": "novidea-blocks",
+	"supports": {
+		"html": false,
+		"className": false,
+		"customClassName": false
+	},
+	"attributes": {
+		"anchor": { "type": "string", "default": "" },
+		"title": { "type": "string", "default": "" },
+		"intro": { "type": "string", "default": "" },
+		"columns": { "type": "number", "enum": [ 2, 3 ], "default": 3 },
+		"surface": { "type": "string", "enum": [ "light", "subtle", "tint", "navy" ], "default": "light" },
+		"picture": { "type": "object", "default": {} },
+		"items": { "type": "array", "default": [] }
+	},
+	"render": "file:./render.php",
+	"style": [ "novidea-blocks-common", "file:./style.css" ],
+	"editorStyle": "novidea-blocks-editor-ui"
+}

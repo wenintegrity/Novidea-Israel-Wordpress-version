@@ -1,0 +1,19 @@
+{
+  "name": "novidea-israel-wordpress",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Novidea Israel WordPress site: theme + blocks plugin, local development with WordPress Playground",
+  "scripts": {
+    "start": "node scripts/start.mjs",
+    "build": "wp-scripts build --webpack-src-dir=wp-content/plugins/novidea-blocks/src --output-path=wp-content/plugins/novidea-blocks/build",
+    "watch": "wp-scripts start --webpack-src-dir=wp-content/plugins/novidea-blocks/src --output-path=wp-content/plugins/novidea-blocks/build",
+    "migrate": "node migration/migrate.mjs",
+    "reset": "node -e \"require('fs').rmSync('wordpress',{recursive:true,force:true});console.log('Local WordPress removed (your theme and plugin in ./wp-content are untouched). Run npm start, then npm run migrate.')\""
+  },
+  "devDependencies": {
+    "@wordpress/icons": "^21.0.0",
+    "@wordpress/scripts": "^37.2.0",
+    "@wp-playground/cli": "3.1.65",
+    "yaml": "^2.9.1"
+  }
+}

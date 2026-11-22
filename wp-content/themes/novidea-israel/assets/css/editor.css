@@ -1,0 +1,21 @@
+/*
+ * Block editor canvas only. The site CSS (Bootstrap, fonts, tokens, brand) is loaded too, so block
+ * previews look like the real page. Novidea sections are full-width, like on the site.
+ */
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-navy);
+}
+
+.wp-block[data-type^='novidea/'] {
+  max-inline-size: none;
+  margin-block: 0;
+}
+
+/* Scroll entrances never run in the editor: show everything */
+[data-animate],
+[data-animate-children] > * {
+  opacity: 1 !important;
+  transform: none !important;
+}

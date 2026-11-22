@@ -1,0 +1,26 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "novidea/names",
+	"title": "Customer logos",
+	"category": "novidea",
+	"icon": "groups",
+	"description": "A strip of customers: each shows its logo, or its name as text when there's no logo.",
+	"keywords": [ "customers", "logos", "clients" ],
+	"textdomain": "novidea-blocks",
+	"supports": {
+		"html": false,
+		"className": false,
+		"customClassName": false
+	},
+	"attributes": {
+		"anchor": { "type": "string", "default": "" },
+		"title": { "type": "string", "default": "" },
+		"names": { "type": "array", "default": [] },
+		"more": { "type": "string", "default": "" },
+		"surface": { "type": "string", "enum": [ "light", "subtle", "tint", "navy" ], "default": "subtle" }
+	},
+	"render": "file:./render.php",
+	"style": [ "novidea-blocks-common", "file:./style.css" ],
+	"editorStyle": "novidea-blocks-editor-ui"
+}

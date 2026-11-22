@@ -1,0 +1,29 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "novidea/hero",
+	"title": "Hero",
+	"category": "novidea",
+	"icon": "cover-image",
+	"description": "Big opening section for the home page and landing pages: picture and slanted yellow panel with the page title and buttons.",
+	"keywords": [ "hero", "banner", "h1" ],
+	"textdomain": "novidea-blocks",
+	"supports": {
+		"html": false,
+		"className": false,
+		"customClassName": false,
+		"multiple": false
+	},
+	"attributes": {
+		"titleStrong": { "type": "string", "default": "" },
+		"titleRest": { "type": "string", "default": "" },
+		"lead": { "type": "string", "default": "" },
+		"primaryCta": { "type": "object", "default": { "label": "", "href": "" } },
+		"secondaryCta": { "type": "object", "default": { "label": "", "href": "" } },
+		"picture": { "type": "object", "default": {} },
+		"redLine": { "type": "boolean", "default": false }
+	},
+	"render": "file:./render.php",
+	"style": [ "novidea-blocks-common", "file:./style.css" ],
+	"editorStyle": "novidea-blocks-editor-ui"
+}

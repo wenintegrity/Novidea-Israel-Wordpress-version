@@ -1,0 +1,27 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "novidea/text",
+	"title": "Text section",
+	"category": "novidea",
+	"icon": "text",
+	"description": "Title and paragraphs, with an optional picture or video beside them.",
+	"keywords": [ "paragraph", "video", "picture" ],
+	"textdomain": "novidea-blocks",
+	"supports": {
+		"html": false,
+		"className": false,
+		"customClassName": false
+	},
+	"attributes": {
+		"anchor": { "type": "string", "default": "" },
+		"title": { "type": "string", "default": "" },
+		"paragraphs": { "type": "array", "default": [] },
+		"picture": { "type": "object", "default": {} },
+		"video": { "type": "object", "default": {} },
+		"surface": { "type": "string", "enum": [ "light", "subtle", "tint", "navy" ], "default": "light" }
+	},
+	"render": "file:./render.php",
+	"style": [ "novidea-blocks-common", "file:./style.css" ],
+	"editorStyle": "novidea-blocks-editor-ui"
+}

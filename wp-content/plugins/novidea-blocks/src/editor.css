@@ -1,0 +1,138 @@
+/* Editing UI inside the editor canvas (loaded into the canvas iframe as the blocks' editorStyle). */
+
+.nv-block .nv-preview {
+	cursor: default;
+}
+
+.nv-form {
+	margin: 1rem auto;
+	max-inline-size: 48rem;
+	padding: 1.25rem;
+	border: 2px dashed #fdd011;
+	border-radius: 4px;
+	background: #fff;
+	color: #1e1e1e;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+	font-size: 13px;
+	line-height: 1.5;
+}
+
+.nv-form__head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
+	margin-block-end: 1rem;
+	font-size: 15px;
+}
+
+.nv-fields {
+	display: grid;
+	gap: 1rem;
+}
+
+.nv-help {
+	margin: 0.25rem 0 0;
+	color: #757575;
+	font-size: 12px;
+}
+
+.nv-ltr input,
+.nv-ltr textarea {
+	direction: ltr;
+	text-align: left;
+}
+
+.nv-link {
+	display: grid;
+	gap: 0.75rem;
+	margin: 0;
+	padding: 0.75rem;
+	border: 1px solid #ddd;
+	border-radius: 2px;
+}
+
+.nv-link legend {
+	padding-inline: 0.25rem;
+	font-size: 11px;
+	font-weight: 500;
+	text-transform: uppercase;
+}
+
+.nv-strings,
+.nv-repeater {
+	display: grid;
+	gap: 0.5rem;
+	justify-items: start;
+}
+
+.nv-strings__row,
+.nv-repeater__item {
+	display: flex;
+	align-items: flex-start;
+	gap: 0.25rem;
+	inline-size: 100%;
+}
+
+.nv-strings__row > :first-child,
+.nv-repeater__item > :first-child {
+	flex: 1;
+	min-inline-size: 0;
+}
+
+.nv-repeater__item .components-panel__body {
+	border: 1px solid #ddd;
+	border-radius: 2px;
+}
+
+.nv-item-actions {
+	display: flex;
+	flex-direction: column;
+	flex-shrink: 0;
+}
+
+.nv-media {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.nv-media__preview {
+	display: block;
+	max-block-size: 6rem;
+	max-inline-size: 10rem;
+	border: 1px solid #ddd;
+	background: #f0f0f0;
+}
+
+.nv-media__file {
+	font-size: 12px;
+}
+
+.nv-media__buttons {
+	display: flex;
+	gap: 0.25rem;
+}
+
+.nv-image {
+	display: grid;
+	gap: 0.5rem;
+}
+
+.nv-icon {
+	display: flex;
+	align-items: flex-end;
+	gap: 0.75rem;
+}
+
+.nv-icon > :last-child {
+	flex: 1;
+}
+
+.nv-icon__preview {
+	flex-shrink: 0;
+	padding: 4px;
+	border: 1px solid #ddd;
+	background: #f4f5f9;
+}
